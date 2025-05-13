@@ -28,6 +28,17 @@ class WeatherInfoViewController: UIViewController {
   }
 
   private func setupUI() {
+    view.backgroundColor = .white
+    setupRefreshButton()
+  }
+  
+  private func setupRefreshButton() {
+    let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshButtonTapped))
+    navigationItem.rightBarButtonItem = refreshButton
+  }
+  
+  @objc private func refreshButtonTapped() {
+    
   }
 }
 
