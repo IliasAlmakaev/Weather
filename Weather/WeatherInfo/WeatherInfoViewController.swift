@@ -19,16 +19,17 @@ class WeatherInfoViewController: UIViewController {
   
   var presenter: WeatherInfoViewOutputProtocol!
   
-  private let configuartor: WeatherInfoConfiguratorInputProtocol = WeatherInfoConfigurator()
+  private let configuarator: WeatherInfoConfiguratorInputProtocol = WeatherInfoConfigurator()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    configuartor.confugure(withView: self)
+    configuarator.confugure(withView: self)
     setupUI()
   }
 
   private func setupUI() {
     view.backgroundColor = .white
+    
     setupRefreshButton()
   }
   
