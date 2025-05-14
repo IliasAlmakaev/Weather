@@ -11,6 +11,8 @@
 		28AA46602DD414D700B2552A /* WeatherInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AA465F2DD414D700B2552A /* WeatherInfoCellViewModel.swift */; };
 		28AA46692DD421AF00B2552A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 28AA46682DD421AF00B2552A /* Alamofire */; };
 		28AA466C2DD421F000B2552A /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 28AA466B2DD421F000B2552A /* SDWebImage */; };
+		28AA466E2DD44A3B00B2552A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AA466D2DD44A3B00B2552A /* NetworkManager.swift */; };
+		28AA46712DD46B6200B2552A /* WeatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AA46702DD46B6200B2552A /* WeatherInfo.swift */; };
 		28CAA3F12DD2C1F800F9B502 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CAA3F02DD2C1F800F9B502 /* AppDelegate.swift */; };
 		28CAA3F32DD2C1F800F9B502 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CAA3F22DD2C1F800F9B502 /* SceneDelegate.swift */; };
 		28CAA3F52DD2C1F800F9B502 /* WeatherInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CAA3F42DD2C1F800F9B502 /* WeatherInfoViewController.swift */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		28AA465D2DD4138100B2552A /* WeatherInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoCell.swift; sourceTree = "<group>"; };
 		28AA465F2DD414D700B2552A /* WeatherInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoCellViewModel.swift; sourceTree = "<group>"; };
+		28AA466D2DD44A3B00B2552A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		28AA46702DD46B6200B2552A /* WeatherInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfo.swift; sourceTree = "<group>"; };
 		28CAA3ED2DD2C1F800F9B502 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28CAA3F02DD2C1F800F9B502 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28CAA3F22DD2C1F800F9B502 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +62,14 @@
 			path = WeatherInfoCell;
 			sourceTree = "<group>";
 		};
+		28AA466F2DD450A800B2552A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				28AA46702DD46B6200B2552A /* WeatherInfo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		28CAA3E42DD2C1F700F9B502 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +91,7 @@
 			children = (
 				28CAA4062DD2C92500F9B502 /* WeatherInfo */,
 				28CAA40E2DD3801300F9B502 /* Services */,
+				28AA466F2DD450A800B2552A /* Models */,
 				28CAA40D2DD2CADF00F9B502 /* LaunchScreen */,
 				28CAA4042DD2C79800F9B502 /* App */,
 				28CAA4052DD2C7A100F9B502 /* Resources */,
@@ -127,6 +140,7 @@
 		28CAA40E2DD3801300F9B502 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				28AA466D2DD44A3B00B2552A /* NetworkManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -209,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28AA466E2DD44A3B00B2552A /* NetworkManager.swift in Sources */,
 				28CAA40A2DD2C96900F9B502 /* WeatherInfoInteractor.swift in Sources */,
 				28AA46602DD414D700B2552A /* WeatherInfoCellViewModel.swift in Sources */,
 				28CAA3F52DD2C1F800F9B502 /* WeatherInfoViewController.swift in Sources */,
@@ -216,6 +231,7 @@
 				28CAA40C2DD2C99000F9B502 /* WeatherInfoConfigurator.swift in Sources */,
 				28CAA3F12DD2C1F800F9B502 /* AppDelegate.swift in Sources */,
 				28CAA3F32DD2C1F800F9B502 /* SceneDelegate.swift in Sources */,
+				28AA46712DD46B6200B2552A /* WeatherInfo.swift in Sources */,
 				28AA465E2DD4138100B2552A /* WeatherInfoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

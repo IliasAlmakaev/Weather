@@ -16,7 +16,7 @@ class WeatherInfoCell: UICollectionViewCell {
   
   var viewModel: WeatherInfoCellViewModelProtocol? {
     didSet {
-      
+      updateView()
     }
   }
   
@@ -50,11 +50,14 @@ class WeatherInfoCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  private func updateView() {
-    guard let viewModel = viewModel as? WeatherInfoCellViewModel else { return }
+  func updateView() {
+  //  guard let viewModel = viewModel as? WeatherInfoCellViewModel else { return }
     
     let url = URL(string: "")
-    imageView.sd_setImage(with: url)
+  //  imageView.sd_setImage(with: url)
+    imageView.image = UIImage(systemName: "sun.max")
+    hourLabel.text = "Сейчас"
+    temperatureLabel.text = "10"
   }
   
   private func setupView() {
@@ -70,8 +73,7 @@ class WeatherInfoCell: UICollectionViewCell {
       imageView.widthAnchor.constraint(equalToConstant: 20),
       imageView.heightAnchor.constraint(equalToConstant: 20),
       temperatureLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-      temperatureLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-      temperatureLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+      temperatureLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
     ])
   }
 }
