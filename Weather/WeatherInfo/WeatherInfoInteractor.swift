@@ -8,7 +8,7 @@
 import Foundation
 
 protocol WeatherInfoInteractorInputProtocol {
-  
+  func getWeatherInfo()
 }
 
 protocol WeatherInfoInteractorOutputProtocol: AnyObject {
@@ -18,8 +18,15 @@ protocol WeatherInfoInteractorOutputProtocol: AnyObject {
 final class WeatherInfoInteractor: WeatherInfoInteractorInputProtocol {
   
   private unowned let presenter: WeatherInfoInteractorOutputProtocol
+  private let networkManager = NetworkManager.shared
   
   required init(presenter: WeatherInfoInteractorOutputProtocol) {
     self.presenter = presenter
+  }
+  
+  func getWeatherInfo() {
+    networkManager.getWeatherInfo(withCity: "Kemerovo") { [unowned self] result in
+      print(result)
+    }
   }
 }

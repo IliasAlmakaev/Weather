@@ -57,6 +57,7 @@ class WeatherInfoCell: UICollectionViewCell {
   //  imageView.sd_setImage(with: url)
     imageView.image = UIImage(systemName: "sun.max")
     hourLabel.text = "Сейчас"
+    // TODO: - Добавить градусы
     temperatureLabel.text = "10"
   }
   

@@ -12,7 +12,7 @@ protocol WeatherInfoViewInputProtocol: AnyObject {
 }
 
 protocol WeatherInfoViewOutputProtocol {
-  
+  func viewDidLoad()
 }
 
 class WeatherInfoViewController: UIViewController {
@@ -39,6 +39,7 @@ class WeatherInfoViewController: UIViewController {
     super.viewDidLoad()
     configuarator.confugure(withView: self)
     setupUI()
+    presenter.viewDidLoad()
   }
 
   private func setupUI() {

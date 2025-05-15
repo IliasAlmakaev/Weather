@@ -21,6 +21,11 @@ final class WeatherInfoPresenter: WeatherInfoViewOutputProtocol {
   required init(view: WeatherInfoViewInputProtocol) {
     self.view = view
   }
+  
+  func viewDidLoad() {
+    // TODO: - Добавить передачу названия города
+    interactor.getWeatherInfo()
+  }
 }
 
 // MARK: - WeatherInfoInteractorOutputProtocol

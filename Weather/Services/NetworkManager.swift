@@ -24,7 +24,13 @@ final class NetworkManager {
     AF.request(url)
       .validate()
       .responseDecodable(of: WeatherInfo.self) { response in
-        // TODO: - Обработать результат
+        switch response.result {
+        case .success(let weatherInfo):
+          completion(.success(weatherInfo))
+        case .failure(let error):
+          completion(.failure(error))
+          print(error)
+        }
       }
   }
 }
