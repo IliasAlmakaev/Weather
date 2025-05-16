@@ -23,12 +23,24 @@ final class WeatherInfoPresenter: WeatherInfoViewOutputProtocol {
   }
   
   func viewDidLoad() {
-    // TODO: - Добавить передачу названия города
     interactor.getWeatherInfo()
+    interactor.requestCurrentLocation()
   }
 }
 
 // MARK: - WeatherInfoInteractorOutputProtocol
 extension WeatherInfoPresenter: WeatherInfoInteractorOutputProtocol {
+  func didReceiveLocation(lat: Double, lon: Double) {
+    <#code#>
+  }
+  
+  func didReceiveLocationError(_ error: Error) {
+    <#code#>
+  }
+  
+  func authorizationStatusChanged(_ status: CLAuthorizationStatus) {
+    <#code#>
+  }
+  
   
 }

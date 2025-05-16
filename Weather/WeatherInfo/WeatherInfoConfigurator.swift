@@ -18,5 +18,7 @@ final class WeatherInfoConfigurator: WeatherInfoConfiguratorInputProtocol {
     
     view.presenter = presenter
     presenter.interactor = interactor
+    interactor.networkManager = NetworkManager()
+    interactor.locationManager = LocationManager()
   }
 }

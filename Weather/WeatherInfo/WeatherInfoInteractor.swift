@@ -6,27 +6,52 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol WeatherInfoInteractorInputProtocol {
-  func getWeatherInfo()
+  func getWeatherInfo(withLatitude lat: Double, andLongitude lon: Double)
+  func requestCurrentLocation()
 }
 
 protocol WeatherInfoInteractorOutputProtocol: AnyObject {
-  
+  func didReceiveLocation(lat: Double, lon: Double)
+  func didReceiveLocationError(_ error: Error)
+  func authorizationStatusChanged(_ status: CLAuthorizationStatus)
 }
 
 final class WeatherInfoInteractor: WeatherInfoInteractorInputProtocol {
   
+  var networkManager: NetworkManagerProtocol!
+  var locationManager: LocationManagerProtocol!
+  
   private unowned let presenter: WeatherInfoInteractorOutputProtocol
-  private let networkManager = NetworkManager.shared
   
   required init(presenter: WeatherInfoInteractorOutputProtocol) {
     self.presenter = presenter
   }
   
-  func getWeatherInfo() {
-    networkManager.getWeatherInfo(withCity: "Kemerovo") { [unowned self] result in
+  func getWeatherInfo(withLatitude lat: Double, andLongitude lon: Double) {
+    networkManager.getWeatherInfo(withLatitude:lat, andLongitude: lon) { [unowned self] result in
       print(result)
     }
+  }
+  
+  func requestCurrentLocation() {
+    locationManager.requestLocation()
+  }
+}
+
+extension WeatherInfoInteractor: LocationManagerDelegate {
+  
+  func didUpdateLocation(lat: Double, lon: Double) {
+    <#code#>
+  }
+  
+  func didFailWithError(_ error: Error) {
+    <#code#>
+  }
+  
+  func didChangeAuthorization(status: CLAuthorizationStatus) {
+    <#code#>
   }
 }
