@@ -8,10 +8,6 @@
 import UIKit
 import SDWebImage
 
-protocol CurrentWeatherInfoViewModelRepresentable {
-  var viewModel: CurrentWeatherInfoViewViewModelProtocol { get }
-}
-
 final class CurrentWeatherInfoView: UIView {
   
   var viewModel: CurrentWeatherInfoViewViewModelProtocol? {

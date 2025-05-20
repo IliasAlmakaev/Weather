@@ -11,7 +11,8 @@ import SDWebImage
 protocol WeatherInfoViewInputProtocol: AnyObject {
   func getWeatherInfo(
     forCurrentView currentWeatherInfoViewModel: CurrentWeatherInfoViewViewModel,
-    andCollectionViewRows collectionViewRows: [WeatherHourInfoCellViewModel]
+    collectionViewRows: [WeatherHourInfoCellViewModel],
+    andTableViewRow tableViewRows: [WeatherDayInfoCellViewModel]
   )
 }
 
@@ -24,6 +25,12 @@ class WeatherInfoViewController: UIViewController {
   var presenter: WeatherInfoViewOutputProtocol!
   
   private let configuarator: WeatherInfoConfiguratorInputProtocol = WeatherInfoConfigurator()
+  
+  private lazy var currentWeatherInfoView: CurrentWeatherInfoView = {
+    let currentWeatherInfoView = CurrentWeatherInfoView()
+    currentWeatherInfoView.translatesAutoresizingMaskIntoConstraints = false
+    return currentWeatherInfoView
+  }()
   
   private lazy var collectionView: UICollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
@@ -39,13 +46,16 @@ class WeatherInfoViewController: UIViewController {
     return collectionView
   }()
   
-  private lazy var currentWeatherInfoView: CurrentWeatherInfoView = {
-    let currentWeatherInfoView = CurrentWeatherInfoView()
-    currentWeatherInfoView.translatesAutoresizingMaskIntoConstraints = false
-    return currentWeatherInfoView
+  private lazy var tableView: UITableView = {
+    let tableView = UITableView()
+    tableView.register(WeatherDayInfoCell.self, forCellReuseIdentifier: WeatherDayInfoCell.identifier)
+    tableView.dataSource = self
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    return tableView
   }()
   
-  private var rows: [WeatherHourInfoCellViewModel] = []
+  private var hourRows: [WeatherHourInfoCellViewModel] = []
+  private var dayRows: [WeatherDayInfoCellViewModel] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -60,6 +70,7 @@ class WeatherInfoViewController: UIViewController {
     setupRefreshButton()
     setupCurrentWeatherInfoView()
     setupCollectionView()
+    setupTableView()
   }
   
   private func setupRefreshButton() {
@@ -86,6 +97,16 @@ class WeatherInfoViewController: UIViewController {
     ])
   }
   
+  private func setupTableView() {
+    view.addSubview(tableView)
+    NSLayoutConstraint.activate([
+      tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 40),
+      tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+      tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+      tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20)
+    ])
+  }
+  
   @objc private func refreshButtonTapped() {
     
   }
@@ -95,11 +116,11 @@ class WeatherInfoViewController: UIViewController {
 extension WeatherInfoViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return rows.count
+    return hourRows.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cellViewModel = rows[indexPath.row]
+    let cellViewModel = hourRows[indexPath.row]
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellViewModel.cellIdentifier, for: indexPath)
     guard let cell = cell as? WeatherHourInfoCell else { return UICollectionViewCell() }
     
@@ -109,8 +130,25 @@ extension WeatherInfoViewController: UICollectionViewDelegate, UICollectionViewD
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let cellViewModel = rows[indexPath.row]
+    let cellViewModel = hourRows[indexPath.row]
     return CGSize(width: cellViewModel.cellHeight, height: cellViewModel.cellHeight)
+  }
+}
+
+// MARK: - UITableViewDataSource
+extension WeatherInfoViewController: UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    dayRows.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cellViewModel = dayRows[indexPath.row]
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellViewModel.cellIdentifier, for: indexPath)
+    guard let cell = cell as? WeatherDayInfoCell else { return UITableViewCell() }
+    
+    cell.viewModel = cellViewModel
+    
+    return cell
   }
 }
 
@@ -118,13 +156,17 @@ extension WeatherInfoViewController: UICollectionViewDelegate, UICollectionViewD
 extension WeatherInfoViewController: WeatherInfoViewInputProtocol {
   func getWeatherInfo(
     forCurrentView currentWeatherInfoViewModel: CurrentWeatherInfoViewViewModel,
-    andCollectionViewRows collectionViewRows: [WeatherHourInfoCellViewModel]
+    collectionViewRows: [WeatherHourInfoCellViewModel],
+    andTableViewRow tableViewRows: [WeatherDayInfoCellViewModel]
   ) {
-    
     currentWeatherInfoView.viewModel = currentWeatherInfoViewModel
     
-    self.rows = collectionViewRows
+    self.hourRows = collectionViewRows
     collectionView.reloadData()
+    
+    self.dayRows = tableViewRows
+    tableView.reloadData()
   }
+
 }
 

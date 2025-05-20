@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class WeatherHourInfoCell: UICollectionViewCell {
+final class WeatherHourInfoCell: UICollectionViewCell {
   
   var viewModel: WeatherHourInfoCellViewModelProtocol? {
     didSet {

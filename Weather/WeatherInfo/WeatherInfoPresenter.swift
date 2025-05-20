@@ -30,10 +30,18 @@ final class WeatherInfoPresenter: WeatherInfoViewOutputProtocol {
 // MARK: - WeatherInfoInteractorOutputProtocol
 extension WeatherInfoPresenter: WeatherInfoInteractorOutputProtocol {
   func didReceiveWeatherInfo(with dataStore: WeatherInfoDataStore) {
+    
     self.dataStore = dataStore
-    let collectionViewRows = getRows(with: dataStore)
+    
     let currentWeatherInfoViewViewModel = CurrentWeatherInfoViewViewModel(weatherInfo: dataStore.weatherInfo)
-    view.getWeatherInfo(forCurrentView: currentWeatherInfoViewViewModel, andCollectionViewRows: collectionViewRows)
+    let collectionViewRows = getRows(with: dataStore)
+    let tableViewRows: [WeatherDayInfoCellViewModel] = dataStore.weatherInfo.days.map { WeatherDayInfoCellViewModel(day: $0) }
+    
+    view.getWeatherInfo(
+      forCurrentView: currentWeatherInfoViewViewModel,
+      collectionViewRows: collectionViewRows,
+      andTableViewRow: tableViewRows
+    )
   }
   
   func didReceiveLocation(lat: Double, lon: Double) {
