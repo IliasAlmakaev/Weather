@@ -32,7 +32,7 @@ final class WeatherInfoCellViewModel: WeatherInfoCellViewModelProtocol {
   }
   
   var temperature: String {
-    String(hourInfo.temperature)
+    String(hourInfo.temperature) + "°"
   }
   
   var imageUrl: URL? {

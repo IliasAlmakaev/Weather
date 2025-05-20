@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WeatherInfoViewInputProtocol: AnyObject {
-  
+  func getWeatherInfo(for rows: [WeatherInfoCellViewModel])
 }
 
 protocol WeatherInfoViewOutputProtocol {
@@ -34,6 +34,8 @@ class WeatherInfoViewController: UIViewController {
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
+  
+  private var rows: [WeatherInfoCellViewModel] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -73,26 +75,31 @@ class WeatherInfoViewController: UIViewController {
 extension WeatherInfoViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    // TODO: - Add Weather info count
-    return 10
+    return rows.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherInfoCell.identifier, for: indexPath)
+    let cellViewModel = rows[indexPath.row]
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellViewModel.cellIdentifier, for: indexPath)
     guard let cell = cell as? WeatherInfoCell else { return UICollectionViewCell() }
     
-    cell.updateView()
+    cell.viewModel = cellViewModel
     
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 90, height: 90)
+    let cellViewModel = rows[indexPath.row]
+    return CGSize(width: cellViewModel.cellHeight, height: cellViewModel.cellHeight)
   }
 }
 
 // MARK: - WeatherInfoViewInputProtocol
 extension WeatherInfoViewController: WeatherInfoViewInputProtocol {
   
+  func getWeatherInfo(for rows: [WeatherInfoCellViewModel]) {
+    self.rows = rows
+    collectionView.reloadData()
+  }
 }
 

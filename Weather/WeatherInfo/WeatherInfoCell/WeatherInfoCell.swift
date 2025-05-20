@@ -50,15 +50,12 @@ class WeatherInfoCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func updateView() {
-  //  guard let viewModel = viewModel as? WeatherInfoCellViewModel else { return }
+  private func updateView() {
+    guard let viewModel = viewModel as? WeatherInfoCellViewModel else { return }
     
-    let url = URL(string: "")
-  //  imageView.sd_setImage(with: url)
-    imageView.image = UIImage(systemName: "sun.max")
-    hourLabel.text = "Сейчас"
-    // TODO: - Добавить градусы
-    temperatureLabel.text = "10"
+    imageView.sd_setImage(with: viewModel.imageUrl)
+    hourLabel.text = viewModel.hour
+    temperatureLabel.text = viewModel.temperature
   }
   
   private func setupView() {
