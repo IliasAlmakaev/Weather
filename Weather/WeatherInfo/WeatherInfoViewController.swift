@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol WeatherInfoViewInputProtocol: AnyObject {
-  func getWeatherInfo(for rows: [WeatherInfoCellViewModel])
+  func getWeatherInfo(
+    forCurrentView currentWeatherInfoViewModel: CurrentWeatherInfoViewViewModel,
+    andCollectionViewRows collectionViewRows: [WeatherInfoCellViewModel]
+  )
 }
 
 protocol WeatherInfoViewOutputProtocol {
@@ -35,6 +39,12 @@ class WeatherInfoViewController: UIViewController {
     return collectionView
   }()
   
+  private lazy var currentWeatherInfoView: CurrentWeatherInfoView = {
+    let currentWeatherInfoView = CurrentWeatherInfoView()
+    currentWeatherInfoView.translatesAutoresizingMaskIntoConstraints = false
+    return currentWeatherInfoView
+  }()
+  
   private var rows: [WeatherInfoCellViewModel] = []
 
   override func viewDidLoad() {
@@ -48,6 +58,7 @@ class WeatherInfoViewController: UIViewController {
     view.backgroundColor = .white
     
     setupRefreshButton()
+    setupCurrentWeatherInfoView()
     setupCollectionView()
   }
   
@@ -56,13 +67,22 @@ class WeatherInfoViewController: UIViewController {
     navigationItem.rightBarButtonItem = refreshButton
   }
   
+  private func setupCurrentWeatherInfoView() {
+    view.addSubview(currentWeatherInfoView)
+    NSLayoutConstraint.activate([
+      currentWeatherInfoView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      currentWeatherInfoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      currentWeatherInfoView.heightAnchor.constraint(equalToConstant: 130)
+    ])
+  }
+  
   private func setupCollectionView() {
     view.addSubview(collectionView)
     NSLayoutConstraint.activate([
-      collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      collectionView.topAnchor.constraint(equalTo: currentWeatherInfoView.bottomAnchor, constant: 40),
       collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
       collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-      collectionView.heightAnchor.constraint(equalToConstant: 90)
+      collectionView.heightAnchor.constraint(equalToConstant: 110)
     ])
   }
   
@@ -96,9 +116,14 @@ extension WeatherInfoViewController: UICollectionViewDelegate, UICollectionViewD
 
 // MARK: - WeatherInfoViewInputProtocol
 extension WeatherInfoViewController: WeatherInfoViewInputProtocol {
-  
-  func getWeatherInfo(for rows: [WeatherInfoCellViewModel]) {
-    self.rows = rows
+  func getWeatherInfo(
+    forCurrentView currentWeatherInfoViewModel: CurrentWeatherInfoViewViewModel,
+    andCollectionViewRows collectionViewRows: [WeatherInfoCellViewModel]
+  ) {
+    
+    currentWeatherInfoView.viewModel = currentWeatherInfoViewModel
+    
+    self.rows = collectionViewRows
     collectionView.reloadData()
   }
 }

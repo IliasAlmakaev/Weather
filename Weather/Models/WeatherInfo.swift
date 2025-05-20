@@ -9,6 +9,8 @@ import Foundation
 
 struct WeatherInfo: Decodable {
   let currentTimeEpoch: Int
+  let currentTemperature: Double
+  let iconUrl: String
   let days: [Day]
   
   enum CodingKeys: String, CodingKey {
@@ -17,18 +19,27 @@ struct WeatherInfo: Decodable {
   
   enum CurrentKeys: String, CodingKey {
     case currentTimeEpoch = "last_updated_epoch"
+    case currentTemperature = "temp_c"
+    case condition
   }
   
   enum ForecastKeys: String, CodingKey {
     case days = "forecastday"
   }
   
+  enum ConditionKeys: String, CodingKey {
+    case icon
+  }
+  
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     let current = try container.nestedContainer(keyedBy: CurrentKeys.self, forKey: .current)
     let forecast = try container.nestedContainer(keyedBy: ForecastKeys.self, forKey: .forecast)
+    let condition = try current.nestedContainer(keyedBy: ConditionKeys.self, forKey: .condition)
     
     currentTimeEpoch = try current.decode(Int.self, forKey: .currentTimeEpoch)
+    currentTemperature = try current.decode(Double.self, forKey: .currentTemperature)
+    iconUrl = try condition.decode(String.self, forKey: .icon)
     days = try forecast.decode([Day].self, forKey: .days)
   }
 }

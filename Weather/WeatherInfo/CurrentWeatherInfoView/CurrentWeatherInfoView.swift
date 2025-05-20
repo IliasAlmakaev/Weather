@@ -1,26 +1,24 @@
 //
-//  WeatherInfoCell.swift
+//  CurrentWeatherInfoView.swift
 //  Weather
 //
-//  Created by Ilyas on 14.05.2025.
+//  Created by Ilyas on 20.05.2025.
 //
 
 import UIKit
 import SDWebImage
 
-protocol WeatherInfoCellModelRepresentable {
-  var viewModel: WeatherInfoCellViewModelProtocol { get }
+protocol CurrentWeatherInfoViewModelRepresentable {
+  var viewModel: CurrentWeatherInfoViewViewModelProtocol { get }
 }
 
-class WeatherInfoCell: UICollectionViewCell {
+final class CurrentWeatherInfoView: UIView {
   
-  var viewModel: WeatherInfoCellViewModelProtocol? {
+  var viewModel: CurrentWeatherInfoViewViewModelProtocol? {
     didSet {
       updateView()
     }
   }
-  
-  static let identifier = "WeatherInfoCell"
   
   private var hourLabel: UILabel = {
     let label = UILabel()
@@ -51,7 +49,7 @@ class WeatherInfoCell: UICollectionViewCell {
   }
   
   private func updateView() {
-    guard let viewModel = viewModel as? WeatherInfoCellViewModel else { return }
+    guard let viewModel = viewModel as? CurrentWeatherInfoViewViewModel else { return }
     
     imageView.sd_setImage(with: viewModel.imageUrl)
     hourLabel.text = viewModel.hour
@@ -59,19 +57,20 @@ class WeatherInfoCell: UICollectionViewCell {
   }
   
   private func setupView() {
-    contentView.addSubview(hourLabel)
-    contentView.addSubview(temperatureLabel)
-    contentView.addSubview(imageView)
+    addSubview(hourLabel)
+    addSubview(temperatureLabel)
+    addSubview(imageView)
     
     NSLayoutConstraint.activate([
-      hourLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-      hourLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+      hourLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+      hourLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
       imageView.topAnchor.constraint(equalTo: hourLabel.bottomAnchor, constant: 10),
-      imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-      imageView.widthAnchor.constraint(equalToConstant: 40),
-      imageView.heightAnchor.constraint(equalToConstant: 40),
+      imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      imageView.widthAnchor.constraint(equalToConstant: 60),
+      imageView.heightAnchor.constraint(equalToConstant: 60),
       temperatureLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-      temperatureLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+      temperatureLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
     ])
   }
 }
+

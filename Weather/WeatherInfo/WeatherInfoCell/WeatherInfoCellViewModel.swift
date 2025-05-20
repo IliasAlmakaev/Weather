@@ -24,32 +24,24 @@ final class WeatherInfoCellViewModel: WeatherInfoCellViewModelProtocol {
   }
   
   var cellHeight: Double {
-    90
+    110
   }
   
   var hour: String {
-    getHour(with: hourInfo.timeEpoch)
+    hourInfo.timeEpoch.getHour
   }
   
   var temperature: String {
-    String(hourInfo.temperature) + "°"
+    hourInfo.temperature.withDegreesCelsius
   }
   
   var imageUrl: URL? {
-    let urlString = "http:" + hourInfo.iconUrl
-    return URL(string: urlString)
+    hourInfo.iconUrl.imageUrl
   }
   
   var hourInfo: Hour
   
   init(hour: Hour) {
     hourInfo = hour
-  }
-  
-  private func getHour(with epochTime: Int) -> String {
-    let date = Date(timeIntervalSince1970: TimeInterval(epochTime))
-    let calendar = Calendar.current
-    let hour = calendar.component(.hour, from: date)
-    return String(hour)
   }
 }
