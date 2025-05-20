@@ -49,7 +49,9 @@ class WeatherInfoViewController: UIViewController {
   private lazy var tableView: UITableView = {
     let tableView = UITableView()
     tableView.register(WeatherDayInfoCell.self, forCellReuseIdentifier: WeatherDayInfoCell.identifier)
+    tableView.separatorStyle = .none
     tableView.dataSource = self
+    tableView.delegate = self
     tableView.translatesAutoresizingMaskIntoConstraints = false
     return tableView
   }()
@@ -149,6 +151,14 @@ extension WeatherInfoViewController: UITableViewDataSource {
     cell.viewModel = cellViewModel
     
     return cell
+  }
+}
+
+// MARK: - UITableViewDelegate
+extension WeatherInfoViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    let cellViewModel = dayRows[indexPath.row]
+    return cellViewModel.cellHeight
   }
 }
 

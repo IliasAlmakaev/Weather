@@ -24,7 +24,7 @@ final class WeatherDayInfoCellViewModel: WeatherDayInfoCellViewModelProtocol {
   }
   
   var cellHeight: Double {
-    110
+    60
   }
   
   var day: String {
