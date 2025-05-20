@@ -28,6 +28,7 @@ final class LocationManager: NSObject, LocationManagerProtocol {
   override init() {
     super.init()
     locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
   }
   
   func requestLocation() {

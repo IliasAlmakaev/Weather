@@ -8,7 +8,7 @@
 import Foundation
 
 struct WeatherInfoDataStore {
-  
+  let weatherInfo: WeatherInfo
 }
 
 final class WeatherInfoPresenter: WeatherInfoViewOutputProtocol {
@@ -23,23 +23,22 @@ final class WeatherInfoPresenter: WeatherInfoViewOutputProtocol {
   }
   
   func viewDidLoad() {
-    interactor.getWeatherInfo()
     interactor.requestCurrentLocation()
   }
 }
 
 // MARK: - WeatherInfoInteractorOutputProtocol
 extension WeatherInfoPresenter: WeatherInfoInteractorOutputProtocol {
+  func didReceiveWeatherInfo(with dataStore: WeatherInfoDataStore) {
+    
+  }
+  
   func didReceiveLocation(lat: Double, lon: Double) {
-    <#code#>
+    
   }
   
   func didReceiveLocationError(_ error: Error) {
-    <#code#>
-  }
-  
-  func authorizationStatusChanged(_ status: CLAuthorizationStatus) {
-    <#code#>
+    
   }
   
   

@@ -15,10 +15,12 @@ final class WeatherInfoConfigurator: WeatherInfoConfiguratorInputProtocol {
   func confugure(withView view: WeatherInfoViewController) {
     let presenter = WeatherInfoPresenter(view: view)
     let interactor = WeatherInfoInteractor(presenter: presenter)
+    let locationManager = LocationManager()
     
     view.presenter = presenter
     presenter.interactor = interactor
     interactor.networkManager = NetworkManager()
-    interactor.locationManager = LocationManager()
+    interactor.locationManager = locationManager
+    locationManager.delegate = interactor
   }
 }
