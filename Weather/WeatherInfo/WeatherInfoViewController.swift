@@ -14,10 +14,12 @@ protocol WeatherInfoViewInputProtocol: AnyObject {
     collectionViewRows: [WeatherHourInfoCellViewModel],
     andTableViewRow tableViewRows: [WeatherDayInfoCellViewModel]
   )
+  func showError(withMessage message: String)
 }
 
 protocol WeatherInfoViewOutputProtocol {
   func viewDidLoad()
+  func getWeatherInfo()
 }
 
 class WeatherInfoViewController: UIViewController {
@@ -110,7 +112,14 @@ class WeatherInfoViewController: UIViewController {
   }
   
   @objc private func refreshButtonTapped() {
-    
+    presenter.getWeatherInfo()
+  }
+  
+  func showAlert(withMessage message: String) {
+    let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "OK", style: .default)
+    alert.addAction(okAction)
+    present(alert, animated: true, completion: nil)
   }
 }
 
@@ -149,6 +158,7 @@ extension WeatherInfoViewController: UITableViewDataSource {
     guard let cell = cell as? WeatherDayInfoCell else { return UITableViewCell() }
     
     cell.viewModel = cellViewModel
+    cell.selectionStyle = .none
     
     return cell
   }
@@ -178,5 +188,8 @@ extension WeatherInfoViewController: WeatherInfoViewInputProtocol {
     tableView.reloadData()
   }
 
+  func showError(withMessage message: String) {
+    showAlert(withMessage: message)
+  }
 }
 

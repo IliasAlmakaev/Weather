@@ -23,7 +23,11 @@ final class WeatherInfoPresenter: WeatherInfoViewOutputProtocol {
   }
   
   func viewDidLoad() {
-    interactor.requestCurrentLocation()
+    interactor.requestLocation()
+  }
+  
+  func getWeatherInfo() {
+    interactor.getWeatherInfo()
   }
 }
 
@@ -44,12 +48,8 @@ extension WeatherInfoPresenter: WeatherInfoInteractorOutputProtocol {
     )
   }
   
-  func didReceiveLocation(lat: Double, lon: Double) {
-    
-  }
-  
   func didReceiveLocationError(_ error: Error) {
-    
+    view.showError(withMessage: error.localizedDescription)
   }
   
   private func getRows(with dataStore: WeatherInfoDataStore) -> [WeatherHourInfoCellViewModel] {
