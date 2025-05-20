@@ -1,5 +1,5 @@
 //
-//  WeatherInfoCell.swift
+//  WeatherHourInfoCell.swift
 //  Weather
 //
 //  Created by Ilyas on 14.05.2025.
@@ -8,19 +8,15 @@
 import UIKit
 import SDWebImage
 
-protocol WeatherInfoCellModelRepresentable {
-  var viewModel: WeatherInfoCellViewModelProtocol { get }
-}
-
-class WeatherInfoCell: UICollectionViewCell {
+class WeatherHourInfoCell: UICollectionViewCell {
   
-  var viewModel: WeatherInfoCellViewModelProtocol? {
+  var viewModel: WeatherHourInfoCellViewModelProtocol? {
     didSet {
       updateView()
     }
   }
   
-  static let identifier = "WeatherInfoCell"
+  static let identifier = "WeatherHourInfoCell"
   
   private var hourLabel: UILabel = {
     let label = UILabel()
@@ -51,7 +47,7 @@ class WeatherInfoCell: UICollectionViewCell {
   }
   
   private func updateView() {
-    guard let viewModel = viewModel as? WeatherInfoCellViewModel else { return }
+    guard let viewModel = viewModel as? WeatherHourInfoCellViewModel else { return }
     
     imageView.sd_setImage(with: viewModel.imageUrl)
     hourLabel.text = viewModel.hour

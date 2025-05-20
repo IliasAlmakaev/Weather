@@ -1,5 +1,5 @@
 //
-//  WeatherInfoCellViewModel.swift
+//  WeatherHourInfoCellViewModel.swift
 //  Weather
 //
 //  Created by Ilyas on 14.05.2025.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol WeatherInfoCellViewModelProtocol {
+protocol WeatherHourInfoCellViewModelProtocol {
   var cellIdentifier: String { get }
   var cellHeight: Double { get }
   var hour: String { get }
@@ -17,10 +17,10 @@ protocol WeatherInfoCellViewModelProtocol {
   init(hour: Hour)
 }
 
-final class WeatherInfoCellViewModel: WeatherInfoCellViewModelProtocol {
+final class WeatherHourInfoCellViewModel: WeatherHourInfoCellViewModelProtocol {
   
   var cellIdentifier: String {
-    "WeatherInfoCell"
+    "WeatherHourInfoCell"
   }
   
   var cellHeight: Double {

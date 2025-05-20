@@ -44,12 +44,12 @@ extension WeatherInfoPresenter: WeatherInfoInteractorOutputProtocol {
     
   }
   
-  private func getRows(with dataStore: WeatherInfoDataStore) -> [WeatherInfoCellViewModel] {
+  private func getRows(with dataStore: WeatherInfoDataStore) -> [WeatherHourInfoCellViewModel] {
     let currentHourEpoch = dataStore.weatherInfo.currentTimeEpoch
     let todayLastHours = dataStore.weatherInfo.days[0].hours.filter { currentHourEpoch < $0.timeEpoch }
     let tomorrowHours = dataStore.weatherInfo.days[1].hours
     let hours = todayLastHours + tomorrowHours
-    let rows: [WeatherInfoCellViewModel] = hours.map { WeatherInfoCellViewModel(hour: $0) }
+    let rows: [WeatherHourInfoCellViewModel] = hours.map { WeatherHourInfoCellViewModel(hour: $0) }
     return rows
   }
 }

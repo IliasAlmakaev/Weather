@@ -11,7 +11,7 @@ import SDWebImage
 protocol WeatherInfoViewInputProtocol: AnyObject {
   func getWeatherInfo(
     forCurrentView currentWeatherInfoViewModel: CurrentWeatherInfoViewViewModel,
-    andCollectionViewRows collectionViewRows: [WeatherInfoCellViewModel]
+    andCollectionViewRows collectionViewRows: [WeatherHourInfoCellViewModel]
   )
 }
 
@@ -31,7 +31,7 @@ class WeatherInfoViewController: UIViewController {
     flowLayout.minimumLineSpacing = 0
     flowLayout.minimumInteritemSpacing = 0
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-    collectionView.register(WeatherInfoCell.self, forCellWithReuseIdentifier: WeatherInfoCell.identifier)
+    collectionView.register(WeatherHourInfoCell.self, forCellWithReuseIdentifier: WeatherHourInfoCell.identifier)
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.backgroundColor = .clear
@@ -45,7 +45,7 @@ class WeatherInfoViewController: UIViewController {
     return currentWeatherInfoView
   }()
   
-  private var rows: [WeatherInfoCellViewModel] = []
+  private var rows: [WeatherHourInfoCellViewModel] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -101,7 +101,7 @@ extension WeatherInfoViewController: UICollectionViewDelegate, UICollectionViewD
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cellViewModel = rows[indexPath.row]
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellViewModel.cellIdentifier, for: indexPath)
-    guard let cell = cell as? WeatherInfoCell else { return UICollectionViewCell() }
+    guard let cell = cell as? WeatherHourInfoCell else { return UICollectionViewCell() }
     
     cell.viewModel = cellViewModel
     
@@ -118,7 +118,7 @@ extension WeatherInfoViewController: UICollectionViewDelegate, UICollectionViewD
 extension WeatherInfoViewController: WeatherInfoViewInputProtocol {
   func getWeatherInfo(
     forCurrentView currentWeatherInfoViewModel: CurrentWeatherInfoViewViewModel,
-    andCollectionViewRows collectionViewRows: [WeatherInfoCellViewModel]
+    andCollectionViewRows collectionViewRows: [WeatherHourInfoCellViewModel]
   ) {
     
     currentWeatherInfoView.viewModel = currentWeatherInfoViewModel
