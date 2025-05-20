@@ -31,8 +31,7 @@ final class WeatherInfoPresenter: WeatherInfoViewOutputProtocol {
 extension WeatherInfoPresenter: WeatherInfoInteractorOutputProtocol {
   func didReceiveWeatherInfo(with dataStore: WeatherInfoDataStore) {
     self.dataStore = dataStore
-    let rows: [WeatherInfoCellViewModel] = dataStore.weatherInfo.days[0].hours.map { WeatherInfoCellViewModel(hour: $0) }
-    view.getWeatherInfo(for: rows)
+    view.getWeatherInfo(for: getRows(with: dataStore))
   }
   
   func didReceiveLocation(lat: Double, lon: Double) {
@@ -43,5 +42,14 @@ extension WeatherInfoPresenter: WeatherInfoInteractorOutputProtocol {
     
   }
   
-  
+  private func getRows(with dataStore: WeatherInfoDataStore) -> [WeatherInfoCellViewModel] {
+    let currentHourEpoch = dataStore.weatherInfo.currentTimeEpoch
+    let currentDays = dataStore.weatherInfo.days[0].hours
+    let todayFirstHours = currentDays.filter { currentHourEpoch >= $0.timeEpoch }
+    let todayLastHours = currentDays.filter { currentHourEpoch < $0.timeEpoch }
+    let tomorrowHours = dataStore.weatherInfo.days[1].hours
+    let hours = [todayFirstHours[todayFirstHours.count - 1]] + todayLastHours + tomorrowHours
+    let rows: [WeatherInfoCellViewModel] = hours.map { WeatherInfoCellViewModel(hour: $0) }
+    return rows
+  }
 }
